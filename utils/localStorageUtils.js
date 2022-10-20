@@ -12,12 +12,20 @@ class LOCALSTOREGEUTILS {
     }
     putProducts(id){
         let products = this.getProducts();
-        products.push(id);
-        localStorage.setItem(this.keyName, JSON.stringify(products))
+        let pushProduct = false;
+        const index = products.indexOf(id);
+        if(index === -1){
+            products.push(id);
+            pushProduct = true;
+        }else{
+            products.splice(index, 1);
+        }
+        
+        localStorage.setItem(this.keyName, JSON.stringify(products));
+
+        return {pushProduct, products}
     }
 }
 
 
 const localstorageutils = new LOCALSTOREGEUTILS();
-localstorageutils.putProducts('el1');
-localstorageutils.putProducts('el2');
